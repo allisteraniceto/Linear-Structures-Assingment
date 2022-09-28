@@ -25,7 +25,7 @@ int main(){
     menu();
     
     cin >> command;
-    getline(cin, text); //after getting command, get the rest of the line 
+    getline(cin, text,'$'); //after getting command, get the rest of the line 
     //use switch for different commands
     while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'||command=='Q'){
         switch(command){ //switch requires integers
@@ -58,13 +58,12 @@ int main(){
             break;
         }
         case 'Q':{ //quits the editor
-
             break;
+        }
         }
         menu();
         cin >> command; //ask user to prompt another command
         getline(cin, text); 
-        }
     }
     
     return 0;
