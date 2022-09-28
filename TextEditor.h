@@ -42,7 +42,7 @@ public:
     /*
     write .txt file function;
     */
-    void makeVec();
+    void makeVec(string);
     /*
     -load text file
     -insert individual line into each element of the vector list
@@ -51,29 +51,29 @@ public:
 
 TextEditor::TextEditor(){
     this->lineNum=0;
-    this->fileName="file.txt";
 }
 TextEditor::TextEditor(string fileName){
     this->fileName=fileName;
 }
 void TextEditor::write(string line){
-    writeFile.open(fileName);
-    if (!writeFile){
+    writeFile.open(fileName); //open the file
+    if (!writeFile){ 
         cout << "ERROR! WRONG FILE!!";
     }
     if (writeFile.is_open()){
         writeFile << line << "\n";
     }
+    writeFile.close(); //remember to close the file after
 }
 void TextEditor::load(){
-    readFile.open(fileName);
+    readFile.open(fileName); //remove \n at the end of string
     if (!readFile){
         cout << "ERROR! WRONG FILE!!";
     }
     getline(readFile, line);
 }
-void TextEditor::makeVec(){
-    readFile.open(fileName); //open .txt file
+void TextEditor::makeVec(string f){
+    readFile.open(f); //open .txt file
     while (readFile>>line){
         vec.push_back(line);
     }

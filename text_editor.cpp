@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream> //use sstream to extract indivual characters from line
+#include <string> //to remove \n at the end of the string 
 #include "TextEditor.h"
 using namespace std;
 
@@ -29,32 +30,39 @@ int main(){
     switch(command){ //switch requires integers
 
     case 'W':{ //write to a file
+        file.makeVec(text);
         file.write(text);
+        break;
     } 
     case 'J':{ //jump to a line
     //need to change string text to an int for a line 
     //format J <line number> 
-    cout << "Output the text after command: " << text << endl;
+        cout << "Output the text after command: " << text << endl;
+        break;
     }
     case 'I':{ //insert text AT current line
 
+        break;
     }
     case 'A':{ //insert text AFTER current line
 
+        break;
     }
     case 'L':{ //liss contents of the buffer
 
+        break;
     }
     case 'D':{ //deletes one or more lines
 
+        break;
     }
     case 'Q':{ //quits the editor
-
+        
+        break;
     }
+    cin >> command; //ask user to prompt another command
+    getline(cin, text); 
     }
-    
-    //cout << "hello world" << endl;
-    //if (command == "W")
     return 0;
     //new feature branch
 }
