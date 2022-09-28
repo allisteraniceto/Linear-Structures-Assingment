@@ -64,7 +64,6 @@ int main(){
         cin >> command; //ask user to prompt another command
         getline(cin, text); 
     }
-    
     return 0;
     //new feature branch
 }

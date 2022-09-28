@@ -8,9 +8,11 @@ using namespace std;
 //use each line as an element in the list 
 //using a list (vector) to easily access a line and make changes
 
-//HOW THE VECTOR IS BEING USED:    
-//read list into vector list
-//then
+//HOW THE VECTOR IS BEING USED:
+//create a vector   
+//read file into vector list
+//if no file, create a vector
+//then 
 //write list back onto the text file
 
 //rubric:
@@ -38,7 +40,7 @@ public:
     /*
     load .txt file function;
     */
-    void write(string);
+    void write();
     /*
     write .txt file function;
     */
@@ -46,6 +48,10 @@ public:
     /*
     -load text file
     -insert individual line into each element of the vector list
+    */
+    void writeVec();
+    /*
+    -
     */
 };
 
@@ -55,13 +61,14 @@ TextEditor::TextEditor(){
 TextEditor::TextEditor(string fileName){
     this->fileName=fileName;
 }
-void TextEditor::write(string line){
+void TextEditor::write(){
     writeFile.open(fileName); //open the file
-    if (!writeFile){ 
+    /* if (!writeFile){ 
         cout << "ERROR! WRONG FILE!!";
-    }
+    } */
     if (writeFile.is_open()){
-        writeFile << line << "\n";
+        ostream_iterator<string> out_iterator(writeFile, "\n"); //iterator to go through vector
+        copy(vec.begin(), vec.end(), out_iterator); 
     }
     writeFile.close(); //remember to close the file after
 }
@@ -71,9 +78,10 @@ void TextEditor::load(){
         cout << "ERROR! WRONG FILE!!";
     }
     getline(readFile, line);
+    readFile.close();
 }
-void TextEditor::makeVec(string f){
-    readFile.open(f); //open .txt file
+void TextEditor::makeVec(string file){
+    readFile.open(file); //open .txt file
     while (readFile>>line){
         vec.push_back(line);
     }
