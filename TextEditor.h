@@ -74,5 +74,4 @@ void TextEditor::load(){
 }
 void TextEditor::makeVec(){
     readFile.open(fileName); //open .txt file
-
 }
