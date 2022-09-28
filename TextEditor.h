@@ -19,7 +19,7 @@ using namespace std;
 
 class TextEditor{
 private:
-    vector<string> lines; //store a list of strings for each line
+    vector<string> vec; //store a list of strings for each line
     int lineNum; //when user prompts to edit/view line, store in here
     string fileName;
     string line;
@@ -74,4 +74,7 @@ void TextEditor::load(){
 }
 void TextEditor::makeVec(){
     readFile.open(fileName); //open .txt file
+    while (readFile>>line){
+        vec.push_back(line);
+    }
 }
