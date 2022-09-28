@@ -27,7 +27,7 @@ int main(){
     cin >> command;
     getline(cin, text,'$'); //after getting command, get the rest of the line 
     //use switch for different commands
-    while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'||command=='Q'){
+    while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'){ //does not include Q to exit program
         switch(command){ //switch requires integers
 
         case 'W':{ //write to a file
@@ -61,7 +61,6 @@ int main(){
             break;
         }
         }
-        menu();
         cin >> command; //ask user to prompt another command
         getline(cin, text); 
     }
