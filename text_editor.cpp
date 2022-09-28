@@ -27,42 +27,46 @@ int main(){
     cin >> command;
     getline(cin, text); //after getting command, get the rest of the line 
     //use switch for different commands
-    switch(command){ //switch requires integers
+    while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'||command=='Q'){
+        switch(command){ //switch requires integers
 
-    case 'W':{ //write to a file
-        file.makeVec(text);
-        file.write(text);
-        break;
-    } 
-    case 'J':{ //jump to a line
-    //need to change string text to an int for a line 
-    //format J <line number> 
-        cout << "Output the text after command: " << text << endl;
-        break;
-    }
-    case 'I':{ //insert text AT current line
+        case 'W':{ //write to a file
+            file.makeVec(text);
+            file.write(text);
+            break;
+        } 
+        case 'J':{ //jump to a line
+        //need to change string text to an int for a line 
+        //format J <line number> 
+            cout << "Output the text after command: " << text << endl;
+            break;
+        }
+        case 'I':{ //insert text AT current line
 
-        break;
-    }
-    case 'A':{ //insert text AFTER current line
+            break;
+        }
+        case 'A':{ //insert text AFTER current line
 
-        break;
-    }
-    case 'L':{ //liss contents of the buffer
+            break;
+        }
+        case 'L':{ //liss contents of the buffer
 
-        break;
-    }
-    case 'D':{ //deletes one or more lines
+            break;
+        }
+        case 'D':{ //deletes one or more lines
 
-        break;
+            break;
+        }
+        case 'Q':{ //quits the editor
+
+            break;
+        }
+        menu();
+        cin >> command; //ask user to prompt another command
+        getline(cin, text); 
+        }
     }
-    case 'Q':{ //quits the editor
-        
-        break;
-    }
-    cin >> command; //ask user to prompt another command
-    getline(cin, text); 
-    }
+    
     return 0;
     //new feature branch
 }
