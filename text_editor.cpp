@@ -32,7 +32,7 @@ int main(){
 
         case 'W':{ //write to a file
             file.makeVec(text);
-            file.write(text);
+            file.write();
             break;
         } 
         case 'J':{ //jump to a line

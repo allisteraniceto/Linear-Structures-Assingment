@@ -81,7 +81,8 @@ void TextEditor::load(){
     readFile.close();
 }
 void TextEditor::makeVec(string file){
-    readFile.open(file); //open .txt file
+    this->fileName=file;
+    readFile.open(fileName); //open .txt file
     while (readFile>>line){
         vec.push_back(line);
     }
