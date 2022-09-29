@@ -19,13 +19,13 @@ void menu() {
 
 int main(){
     char command; //user inputs single character command 'J','A', etc.
-    string text;
+    string text, word;
 
     TextEditor file;
     menu();
     
     cin >> command;
-    getline(cin, text,'$'); //after getting command, get the rest of the line 
+    getline(cin, text); //after getting command, get the rest of the line 
     //use switch for different commands
     while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'){ //does not include Q to exit program
         switch(command){ //switch requires integers
@@ -37,12 +37,14 @@ int main(){
         } 
         case 'J':{ //jump to a line
         //need to change string text to an int for a line 
-        //format J <line number> 
-            cout << "Output the text after command: " << text << endl;
+        //format J <line number>
+            stringstream X(text); // put text into stream
+            getline(X,word,' ');
+            cout << "Output the text after command: " << word << endl;
             break;
         }
         case 'I':{ //insert text AT current line
-
+            cout << "case I " << endl;
             break;
         }
         case 'A':{ //insert text AFTER current line

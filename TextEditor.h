@@ -63,9 +63,9 @@ TextEditor::TextEditor(string fileName){
 }
 void TextEditor::write(){
     writeFile.open(fileName); //open the file
-    /* if (!writeFile){ 
+    if (!writeFile){ 
         cout << "ERROR! WRONG FILE!!";
-    } */
+    }
     if (writeFile.is_open()){
         ostream_iterator<string> out_iterator(writeFile, "\n"); //iterator to go through vector
         copy(vec.begin(), vec.end(), out_iterator); 
