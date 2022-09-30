@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream> //use sstream to extract indivual characters from line
-#include <string> //to remove \n at the end of the string 
+#include <string> //to remove \n at the end of the string
+#include <string.h>
 #include "TextEditor.h"
 using namespace std;
 
@@ -17,18 +18,34 @@ void menu() {
 	cout << "*--------------------------------------------------------*"<<endl;
 }
 
-int main(){
-    char command; //user inputs single character command 'J','A', etc.
-    string text, word;
+void splitString(const string &s, vector<string> &str){
+    stringstream X(s);                  //put string s into string stream x
+    string cw;                          //character or word
+    while (getline(X, cw, ' ')){        //every word that is split, put at the end of the vector
+        str.push_back(cw);
+    }
+}
 
-    TextEditor file;
-    menu();
+int main(){
+    //char command; //user inputs single character command 'J','A', etc.
+    string text, word, convert;
+
+    TextEditor file; //make TextEditor object
+    vector<string> comm;
+    menu(); //show command menu
     
-    cin >> command;
-    getline(cin, text); //after getting command, get the rest of the line 
+    cout << "COMMAND: ";
+    cin >> text;
+    splitString(text, comm); //split string into words
+    
+    convert=comm[0]; //first element in vector is the command
+    char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
+
+    strcpy(command, convert.c_str()); //copy string into char arr
+
     //use switch for different commands
-    while (command=='W'||command=='J'||command=='I'||command=='A'||command=='L'||command=='D'){ //does not include Q to exit program
-        switch(command){ //switch requires integers
+    while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
+        switch(command[0]){ //switch requires integers
 
         case 'W':{ //write to a file
             file.makeVec(text);
@@ -38,9 +55,7 @@ int main(){
         case 'J':{ //jump to a line
         //need to change string text to an int for a line 
         //format J <line number>
-            stringstream X(text); // put text into stream
-            getline(X,word,' ');
-            cout << "Output the text after command: " << word << endl;
+            cout << "Output the text after command: " << comm[0] << endl;
             break;
         }
         case 'I':{ //insert text AT current line
