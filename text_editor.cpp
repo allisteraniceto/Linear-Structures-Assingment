@@ -2,6 +2,7 @@
 #include <sstream> //use sstream to extract indivual characters from line
 #include <string> //to remove \n at the end of the string
 #include <string.h>
+//#include <bits/stdc++.h>
 #include "TextEditor.h"
 using namespace std;
 
@@ -20,7 +21,7 @@ void menu() {
 
 void splitString(const string &s, vector<string> &str){
     stringstream X(s);                  //put string s into string stream x
-    string cw;                          //character or word
+    string cw="";                          //character or word
     while (getline(X, cw, ' ')){        //every word that is split, put at the end of the vector
         str.push_back(cw);
     }
@@ -28,20 +29,20 @@ void splitString(const string &s, vector<string> &str){
 
 int main(){
     //char command; //user inputs single character command 'J','A', etc.
-    string text, word, convert;
+    string text, convert;
 
     TextEditor file; //make TextEditor object
     vector<string> comm;
     menu(); //show command menu
     
     cout << "COMMAND: ";
-    cin >> text;
+    getline(cin, text);
     splitString(text, comm); //split string into words
     
     convert=comm[0]; //first element in vector is the command
-    char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
+    char command[1]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
 
-    strcpy(command, convert.c_str()); //copy string into char arr
+    strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 
     //use switch for different commands
     while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
@@ -55,7 +56,7 @@ int main(){
         case 'J':{ //jump to a line
         //need to change string text to an int for a line 
         //format J <line number>
-            cout << "Output the text after command: " << comm[0] << endl;
+            cout << "Output the text after command: " << comm[1] << comm[2] << endl;
             break;
         }
         case 'I':{ //insert text AT current line
