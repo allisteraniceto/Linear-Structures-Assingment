@@ -30,20 +30,19 @@ void splitString(const string &s, vector<string> &str){
 }
 
 //returns string command into a string
-char* getCommand(vector<string> &str){
+void getCommand(vector<string> &str, char* c){
     string convert;
     convert=str[0]; //first elemetn in vector is command
-    char c[2]; //2 size of char
     strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
-    return c; //returns c (command) pointer to char array
+    //return c; //returns c (command) pointer to char array
 }
 
 int main(){
     //char command; //user inputs single character command 'J','A', etc.
-    string text, convert;
+    string text;
     TextEditor file; //make TextEditor object
     vector<string> comm;
-    char* command; //pointer to command array;
+    char command[2]; //pointer to command array;
 
     menu(); //show command menu
     
@@ -56,7 +55,7 @@ int main(){
 
     //strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 
-    command=getCommand(comm);
+    getCommand(comm, command);
 
     //use switch for different commands
     while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
@@ -98,8 +97,10 @@ int main(){
         }
         }
         comm.clear(); //clear vector
-        std::cin >> command; //ask user to prompt another command
-        std::getline(std::cin, text); 
+        cout << "COMMAND: ";
+        std::getline(std::cin, text);
+        splitString(text, comm);
+        getCommand(comm, command);
     }
     return 0;
     //new feature branch
