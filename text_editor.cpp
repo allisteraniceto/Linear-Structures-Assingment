@@ -97,7 +97,7 @@ int main(){
         }
         }
         comm.clear(); //clear vector
-        cout << "COMMAND: ";
+        cout << "COMMAND: "; //redo command process
         std::getline(std::cin, text);
         splitString(text, comm);
         getCommand(comm, command);
