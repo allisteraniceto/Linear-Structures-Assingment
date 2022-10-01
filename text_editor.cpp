@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream> //use sstream to extract indivual characters from line
 #include <string> //to remove \n at the end of the string
+#include <cstring>
 #include <string.h>
 //#include <bits/stdc++.h>
 #include "TextEditor.h"
@@ -40,7 +41,7 @@ int main(){
     splitString(text, comm); //split string into words
     
     convert=comm[0]; //first element in vector is the command
-    char command[1]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
+    char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
 
     strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 
