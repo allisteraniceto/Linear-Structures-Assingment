@@ -34,15 +34,14 @@ void getCommand(vector<string> &str, char* c){
     string convert;
     convert=str[0]; //first elemetn in vector is command
     strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
-    //return c; //returns c (command) pointer to char array
 }
 
 int main(){
-    //char command; //user inputs single character command 'J','A', etc.
-    string text;
     TextEditor file; //make TextEditor object
     vector<string> comm;
-    char command[2]; //pointer to command array;
+    string text;
+    char command[2]; //user inputs single character command 'J','A', etc.
+    int currentLine=0;
 
     menu(); //show command menu
     
@@ -69,11 +68,9 @@ int main(){
         case 'J':{ //jump to a line
         //need to change string text to an int for a line 
         //format J <line number>
-            int line1=0;
-            int line2=0;
-            istringstream(comm[1]) >> line1;
-            istringstream(comm[2]) >> line2;
-            cout << "Output the text after command: " << line1 << line2 << endl;
+            istringstream(comm[1]) >> currentLine;
+            //istringstream(comm[2]) >> line2;
+            cout << "Current Line: " << currentLine << endl;
             break;
         }
         case 'I':{ //insert text AT current line
