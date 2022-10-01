@@ -20,30 +20,43 @@ void menu() {
 	cout << "*--------------------------------------------------------*"<<endl;
 }
 
+//splits line into command
 void splitString(const string &s, vector<string> &str){
     stringstream X(s);                  //put string s into string stream x
     string cw="";                          //character or word
-    while (getline(X, cw, ' ')){        //every word that is split, put at the end of the vector
+    while (std::getline(X, cw, ' ')){        //every word that is split, put at the end of the vector
         str.push_back(cw);
     }
+}
+
+//returns string command into a string
+char* getCommand(vector<string> &str){
+    string convert;
+    convert=str[0]; //first elemetn in vector is command
+    char c[2]; //2 size of char
+    strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    return c; //returns c (command) pointer to char array
 }
 
 int main(){
     //char command; //user inputs single character command 'J','A', etc.
     string text, convert;
-
     TextEditor file; //make TextEditor object
     vector<string> comm;
+    char* command; //pointer to command array;
+
     menu(); //show command menu
     
     cout << "COMMAND: ";
-    getline(cin, text);
+    std::getline(std::cin, text);
     splitString(text, comm); //split string into words
     
-    convert=comm[0]; //first element in vector is the command
-    char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
+    //convert=comm[0]; //first element in vector is the command
+    //char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
 
-    strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    //strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+
+    command=getCommand(comm);
 
     //use switch for different commands
     while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
@@ -57,7 +70,11 @@ int main(){
         case 'J':{ //jump to a line
         //need to change string text to an int for a line 
         //format J <line number>
-            cout << "Output the text after command: " << comm[1] << comm[2] << endl;
+            int line1=0;
+            int line2=0;
+            istringstream(comm[1]) >> line1;
+            istringstream(comm[2]) >> line2;
+            cout << "Output the text after command: " << line1 << line2 << endl;
             break;
         }
         case 'I':{ //insert text AT current line
@@ -80,8 +97,9 @@ int main(){
             break;
         }
         }
-        cin >> command; //ask user to prompt another command
-        getline(cin, text); 
+        comm.clear(); //clear vector
+        std::cin >> command; //ask user to prompt another command
+        std::getline(std::cin, text); 
     }
     return 0;
     //new feature branch
