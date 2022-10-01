@@ -49,9 +49,9 @@ public:
     -load text file
     -insert individual line into each element of the vector list
     */
-    void writeVec();
+    int getLastElement();
     /*
-    -
+    - gets last element of the vector
     */
 };
 
@@ -86,4 +86,7 @@ void TextEditor::makeVec(string file){
     while (readFile>>line){
         vec.push_back(line);
     }
+}
+int TextEditor::getLastElement(){
+    return vec.size()-1;
 }
