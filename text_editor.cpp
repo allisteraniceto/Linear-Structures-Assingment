@@ -75,7 +75,7 @@ int main(){
             else if(currentLine==0){//if command line # is 0;
                 currentLine=file.getLastElement(); //last element
             }
-            cout << "Current Line: " << file.getLastElement() << endl;
+            cout << "Current Line: " << currentLine << endl;
             break;
         }
         case 'I':{ //insert text AT current line
