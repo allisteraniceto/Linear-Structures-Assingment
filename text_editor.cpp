@@ -69,8 +69,13 @@ int main(){
         //need to change string text to an int for a line 
         //format J <line number>
             istringstream(comm[1]) >> currentLine;
-            //istringstream(comm[2]) >> line2;
-            cout << "Current Line: " << currentLine << endl;
+            if (currentLine==-1){ //if command line # is -1;
+                currentLine=0;
+            }
+            else if(currentLine==0){//if command line # is 0;
+                currentLine=file.getLastElement(); //last element
+            }
+            cout << "Current Line: " << file.getLastElement() << endl;
             break;
         }
         case 'I':{ //insert text AT current line
