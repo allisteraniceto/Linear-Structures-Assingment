@@ -81,14 +81,24 @@ TextEditor::TextEditor(){
 TextEditor::TextEditor(string fileName){
     this->fileName=fileName;
 }
+void TextEditor::makeVec(string file){
+    this->fileName=file;
+    readFile.open(fileName); //open .txt file
+    while (readFile>>line){
+        vec.push_back(line);
+    }
+    readFile.close();
+}
 void TextEditor::write(){
     writeFile.open(fileName); //open the file
     if (!writeFile){ 
         cout << "ERROR! WRONG FILE!!";
     }
     if (writeFile.is_open()){
-        ostream_iterator<string> out_iterator(writeFile, "\n"); //iterator to go through vector
-        copy(vec.begin(), vec.end(), out_iterator); 
+        if (vec.size()>1){ //if vector is not empty, write contents to .txt file
+            ostream_iterator<string> out_iterator(writeFile, "\n"); //iterator to go through vector
+            copy(vec.begin(), vec.end(), out_iterator);
+        }
     }
     writeFile.close(); //remember to close the file after
 }
@@ -98,14 +108,6 @@ void TextEditor::load(){
         cout << "ERROR! WRONG FILE!!";
     }
     getline(readFile, line);
-    readFile.close();
-}
-void TextEditor::makeVec(string file){
-    this->fileName=file;
-    readFile.open(fileName); //open .txt file
-    while (readFile>>line){
-        vec.push_back(line);
-    }
     readFile.close();
 }
 int TextEditor::getLastElement(){
