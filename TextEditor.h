@@ -83,8 +83,8 @@ TextEditor::TextEditor(string fileName){
 }
 void TextEditor::makeVec(string file){
     this->fileName=file;
-    readFile.open(fileName); //open .txt file
-    while (readFile>>line){
+    readFile.open(fileName, ios::in); //open .txt file to read
+    while (std::getline(readFile, line)){
         vec.push_back(line);
     }
     readFile.close();
