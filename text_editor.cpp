@@ -71,7 +71,7 @@ int main(){
         switch(command[0]){ //switch requires integers
 
         case 'W':{ //write to a file
-            file.makeVec(text);
+            file.makeVec(comm[1]);
             file.write();
             break;
         } 
