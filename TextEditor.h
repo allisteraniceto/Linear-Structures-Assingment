@@ -22,41 +22,49 @@ using namespace std;
 class TextEditor{
 private:
     vector<string> vec; //store a list of strings for each line
-    int lineNum; //when user prompts to edit/view line, store in here
+    int currentLine; //when user prompts to edit/view line, store in here
     string fileName;
     string line;
     ifstream readFile;
     ofstream writeFile;
 public:
     TextEditor(); 
-    /*
-    default constructor
-    */
+    //
+    //default constructor
+    //
     TextEditor(string); 
-    /*
-    overloaded constructor
-    */
+    //
+    //overloaded constructor
+    //
+    void setCurrentLine(int);
+    //
+    //initializes current line
+    //
     void load();
-    /*
-    load .txt file function;
-    */
+    //
+    //load .txt file function;
+    //
     void write();
-    /*
-    write .txt file function;
-    */
+    //
+    //write .txt file function;
+    //
     void makeVec(string);
-    /*
-    -load text file
-    -insert individual line into each element of the vector list
-    */
+    //
+    //-load text file
+    //-insert individual line into each element of the vector list
+    //
     int getLastElement();
-    /*
-    - gets last element of the vector
-    */
+    //
+    //- gets last element of the vector
+    //
+    void insertAt(string);
+    //
+    //-insert text at currentline
+    //
 };
 
 TextEditor::TextEditor(){
-    this->lineNum=0;
+    this->currentLine=0;
 }
 TextEditor::TextEditor(string fileName){
     this->fileName=fileName;
@@ -89,4 +97,11 @@ void TextEditor::makeVec(string file){
 }
 int TextEditor::getLastElement(){
     return vec.size()-1;
+}
+void TextEditor::setCurrentLine(int l){
+    this->currentLine=l;
+}
+void TextEditor::insertAt(string w){
+    auto position = vec.begin() + currentLine; //iterator (use auto in c++11, instead of vector<int>::iterator)
+    vec.insert(position,vec.size(), w);
 }

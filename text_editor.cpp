@@ -36,10 +36,20 @@ void getCommand(vector<string> &str, char* c){
     strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 }
 
+//concatenates strings after the first element (command) into one string
+string concatenate(vector<string> &str){
+    string c;
+    for (int i=1; i < str.size(); i++){
+        c=c+str[i]+" ";
+    }
+    return c;
+}
+
 int main(){
     TextEditor file; //make TextEditor object
     vector<string> comm;
     string text;
+    string input;
     char command[2]; //user inputs single character command 'J','A', etc.
     int currentLine=0;
 
@@ -70,19 +80,22 @@ int main(){
         //format J <line number>
             istringstream(comm[1]) >> currentLine;
             if (currentLine==-1){ //if command line # is -1;
-                currentLine=0;
+                file.setCurrentLine(currentLine);
             }
             else if(currentLine==0){//if command line # is 0;
-                currentLine=file.getLastElement(); //last element
+                file.setCurrentLine(file.getLastElement()); //last element
             }
             cout << "Current Line: " << currentLine << endl;
             break;
         }
         case 'I':{ //insert text AT current line
-            cout << "case I " << endl;
+            input=concatenate(comm); //concatenates string elements after command together
+            file.insertAt(input);
+            cout << "case I: "<< input << endl;
             break;
         }
         case 'A':{ //insert text AFTER current line
+            input=concatenate(comm);
 
             break;
         }
