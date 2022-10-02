@@ -96,15 +96,15 @@ int main(){
         }
         case 'A':{ //insert text AFTER current line
             input=concatenate(comm);
-
+            file.insertAfter(input);
             break;
         }
-        case 'L':{ //liss contents of the buffer
-
+        case 'L':{ //list contents of the buffer
+            file.listBuffer(comm);
             break;
         }
         case 'D':{ //deletes one or more lines
-
+            file.deleteLines(comm);
             break;
         }
         case 'Q':{ //quits the editor

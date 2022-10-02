@@ -59,8 +59,20 @@ public:
     //
     void insertAt(string);
     //
-    //-insert text at currentline
+    //-insert text AT currentline
     //
+    void insertAfter(string);
+    //
+    //-insert text AFTER currentline
+    //
+    void listBuffer(vector<string>&);
+    //
+    //-lists contents of buffer by iterating through vector
+    //
+    void deleteLines(vector<string>&);
+    //-if no number is given, delete current line
+    //-if 1 number is given, delete line given
+    //-if 2 numbers are given, delete range of lines given
 };
 
 TextEditor::TextEditor(){
@@ -94,6 +106,7 @@ void TextEditor::makeVec(string file){
     while (readFile>>line){
         vec.push_back(line);
     }
+    readFile.close();
 }
 int TextEditor::getLastElement(){
     return vec.size()-1;
@@ -102,6 +115,47 @@ void TextEditor::setCurrentLine(int l){
     this->currentLine=l;
 }
 void TextEditor::insertAt(string w){
-    auto position = vec.begin() + currentLine; //iterator (use auto in c++11, instead of vector<int>::iterator)
+    auto position = vec.begin() + currentLine-1; //iterator (use auto in c++11, instead of vector<int>::iterator)
+    vec.insert(position,vec.size(), w); //-1 because of element position
+}
+void TextEditor::insertAfter(string w){
+    auto position = vec.begin() + currentLine;
     vec.insert(position,vec.size(), w);
+}
+void TextEditor::listBuffer(vector<string> &str){
+    int lineNum1;
+    int lineNum2;
+    if (str.size()==1){ //outputs entire buffer is no lines are given
+        for (auto i = vec.begin(); i != vec.end(); i++){
+            cout << *i << endl; //* derefrence to output whatever i is pointing at
+        } 
+    }
+    else if (str.size()==2){//outputs current line if 1 line is given
+        istringstream(str[1]) >> lineNum1;
+        cout << vec[lineNum1-1] << endl;
+    }
+    else if (str.size()==3){
+        istringstream(str[1]) >> lineNum1;
+        istringstream(str[2]) >> lineNum2;
+        for (auto i=vec.begin()+lineNum1; i != vec.begin()+lineNum2; i++){
+            cout << *i << endl;
+        }
+    }
+    
+}
+void TextEditor::deleteLines(vector<string> &str){
+    int lineNum1;
+    int lineNum2;
+    if (str.size()==1){ //if no lines are given
+        vec.erase(vec.begin()+currentLine); //delete first line
+    }
+    else if(str.size()==2){
+        istringstream(str[1]) >> lineNum1;
+        vec.erase(vec.begin()+lineNum1-1);
+    }
+    else if(str.size()==3){
+        istringstream(str[1]) >> lineNum1; //second element is line1
+        istringstream(str[2]) >> lineNum2; //third element is line2
+        vec.erase(vec.begin()+lineNum1-1, vec.begin()+lineNum2)-1;//erase from line1 to line2
+    }
 }

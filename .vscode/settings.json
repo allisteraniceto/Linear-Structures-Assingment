@@ -9,6 +9,14 @@
         "string": "cpp",
         "unordered_map": "cpp",
         "unordered_set": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "sstream": "cpp",
+        "regex": "cpp",
+        "array": "cpp",
+        "forward_list": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp",
+        "bitset": "cpp",
+        "ostream": "cpp"
     }
 }
