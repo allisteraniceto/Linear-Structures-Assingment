@@ -137,7 +137,7 @@ void TextEditor::listBuffer(vector<string> &str){
     else if (str.size()==3){
         istringstream(str[1]) >> lineNum1;
         istringstream(str[2]) >> lineNum2;
-        for (auto i=vec.begin()+lineNum1; i != vec.begin()+lineNum2; i++){
+        for (auto i=vec.begin()+lineNum1-1; i != vec.begin()+lineNum2-1; i++){
             cout << *i << endl;
         }
     }
@@ -156,6 +156,6 @@ void TextEditor::deleteLines(vector<string> &str){
     else if(str.size()==3){
         istringstream(str[1]) >> lineNum1; //second element is line1
         istringstream(str[2]) >> lineNum2; //third element is line2
-        vec.erase(vec.begin()+lineNum1-1, vec.begin()+lineNum2)-1;//erase from line1 to line2
+        vec.erase(vec.begin()+lineNum1-1, vec.begin()+lineNum2-1);//erase from line1 to line2
     }
 }
