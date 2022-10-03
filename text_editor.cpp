@@ -33,7 +33,7 @@ void splitString(const string &s, vector<string> &str){
 void getCommand(vector<string> &str, char* c){
     string convert;
     convert=str[0]; //first elemetn in vector is command
-    strcpy_s(c,2, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 }
 
 //concatenates strings after the first element (command) into one string
