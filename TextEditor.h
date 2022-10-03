@@ -83,9 +83,13 @@ TextEditor::TextEditor(string fileName){
 }
 void TextEditor::makeVec(string file){
     this->fileName=file;
+    string l;
     readFile.open(fileName, ios::in); //open .txt file to read
-    while (std::getline(readFile, line)){
-        vec.push_back(line);
+    if (!readFile) {
+        cout << "ERROR!";
+    }
+    while (std::getline(readFile,l)){
+        vec.push_back(l);
     }
     readFile.close();
 }
@@ -117,8 +121,13 @@ void TextEditor::setCurrentLine(int l){
     this->currentLine=l;
 }
 void TextEditor::insertAt(string w){
-    auto position = vec.begin() + currentLine-1; //iterator (use auto in c++11, instead of vector<int>::iterator)
-    vec.insert(position,vec.size(), w); //-1 because of element position
+    if (vec.empty()) {//if nothing in vector, insert first element
+        vec.push_back(w);
+    }
+    else {
+        auto position = vec.begin() + currentLine-1; //iterator (use auto in c++11, instead of vector<int>::iterator)
+        vec.insert(position,vec.size(), w); //-1 because of element position
+    }
 }
 void TextEditor::insertAfter(string w){
     auto position = vec.begin() + currentLine;

@@ -33,7 +33,7 @@ void splitString(const string &s, vector<string> &str){
 void getCommand(vector<string> &str, char* c){
     string convert;
     convert=str[0]; //first elemetn in vector is command
-    strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    strcpy_s(c,2, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 }
 
 //concatenates strings after the first element (command) into one string
@@ -79,12 +79,14 @@ int main(){
         //need to change string text to an int for a line 
         //format J <line number>
             istringstream(comm[1]) >> currentLine;
-            if (currentLine==-1){ //if command line # is -1;
+            if (currentLine == -1) { //if command line # is -1;
                 file.setCurrentLine(currentLine);
             }
-            else if(currentLine==0){//if command line # is 0;
+            else if (currentLine == 0) {//if command line # is 0;
                 file.setCurrentLine(file.getLastElement()); //last element
             }
+            else
+                file.setCurrentLine(currentLine);
             cout << "Current Line: " << currentLine << endl;
             break;
         }
