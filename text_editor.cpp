@@ -59,10 +59,7 @@ int main(){
     std::getline(std::cin, text);
     splitString(text, comm); //split string into words
     
-    //convert=comm[0]; //first element in vector is the command
-    //char command[2]; //make char array the length of the string, user inputs single character command 'J', 'A', etc. 
-
-    //strcpy(command, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    
 
     getCommand(comm, command);
 
