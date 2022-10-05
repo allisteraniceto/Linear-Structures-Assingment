@@ -36,6 +36,10 @@ public:
     //
     //overloaded constructor
     //
+    void setFileName(string);
+    //
+    //initializes fileName
+    //
     void setCurrentLine(int);
     //
     //initializes current line
@@ -76,7 +80,7 @@ public:
 };
 
 TextEditor::TextEditor(){
-    this->currentLine=0;
+    this->currentLine=1; //starts at line 1
 }
 TextEditor::TextEditor(string fileName){
     this->fileName=fileName;
@@ -125,7 +129,7 @@ void TextEditor::insertAt(string w){
         vec.push_back(w);
     }
     else {
-        auto position = vec.begin() + currentLine-1; //iterator (use auto in c++11, instead of vector<int>::iterator)
+        auto position = vec.begin() + (currentLine-1); //iterator (use auto in c++11, instead of vector<int>::iterator)
         vec.insert(position,vec.size(), w); //-1 because of element position
     }
 }
@@ -137,8 +141,10 @@ void TextEditor::listBuffer(vector<string> &str){
     int lineNum1;
     int lineNum2;
     if (str.size()==1){ //outputs entire buffer is no lines are given
+        int l = 1;
         for (auto i = vec.begin(); i != vec.end(); i++){
-            cout << *i << endl; //* derefrence to output whatever i is pointing at
+            cout << l << "| " << *i << endl; //* derefrence to output whatever i is pointing at
+            l++;
         } 
     }
     else if (str.size()==2){//outputs current line if 1 line is given
@@ -148,7 +154,7 @@ void TextEditor::listBuffer(vector<string> &str){
     else if (str.size()==3){
         istringstream(str[1]) >> lineNum1;
         istringstream(str[2]) >> lineNum2;
-        for (auto i=vec.begin()+lineNum1-1; i != vec.begin()+lineNum2-1; i++){
+        for (auto i=vec.begin()+(lineNum1-1); i != vec.begin()+(lineNum2-1); i++){
             cout << *i << endl;
         }
     }
@@ -158,15 +164,18 @@ void TextEditor::deleteLines(vector<string> &str){
     int lineNum1;
     int lineNum2;
     if (str.size()==1){ //if no lines are given
-        vec.erase(vec.begin()+currentLine); //delete first line
+        vec.erase(vec.begin()+(currentLine-1)); //delete first line
     }
     else if(str.size()==2){
         istringstream(str[1]) >> lineNum1;
-        vec.erase(vec.begin()+lineNum1-1);
+        vec.erase(vec.begin()+(lineNum1-1));
     }
     else if(str.size()==3){
         istringstream(str[1]) >> lineNum1; //second element is line1
         istringstream(str[2]) >> lineNum2; //third element is line2
-        vec.erase(vec.begin()+lineNum1-1, vec.begin()+lineNum2-1);//erase from line1 to line2
+        vec.erase(vec.begin()+(lineNum1-1), vec.begin()+(lineNum2-1));//erase from line1 to line2
     }
+}
+void TextEditor::setFileName(string f) {
+    this->fileName = f;
 }

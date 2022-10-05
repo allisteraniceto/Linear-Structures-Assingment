@@ -3,7 +3,7 @@
 #include <string> //to remove \n at the end of the string
 #include <cstring>
 #include <string.h>
-//#include <bits/stdc++.h>
+#include <stdlib.h> //used to exit
 #include "TextEditor.h"
 using namespace std;
 
@@ -33,7 +33,7 @@ void splitString(const string &s, vector<string> &str){
 void getCommand(vector<string> &str, char* c){
     string convert;
     convert=str[0]; //first elemetn in vector is command
-    strcpy(c, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
+    strcpy_s(c, 2, convert.c_str()); //copy string into char arr (strcpy_s doesnt work BECAREFUL)
 }
 
 //concatenates strings after the first element (command) into one string
@@ -65,7 +65,7 @@ int main(){
             std::getline(std::cin, text);
             splitString(text, comm); //split string into words
             getCommand(comm, command);
-            if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D')){
+            if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'||command[0]=='Q')){
                 throw (x);
             }
             keepAlive=false;
@@ -76,54 +76,102 @@ int main(){
     }
 
     //use switch for different commands
-    while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
-        switch(command[0]){ //switch requires integers
+    while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'||command[0]=='Q') { //does not include Q to exit program
+        try{
+            int t=0;
+            switch(command[0]){ //switch requires integers or char
 
-        case 'W':{ //write to a file
-            file.makeVec(comm[1]);
-            file.write();
-            break;
-        } 
-        case 'J':{ //jump to a line
-        //need to change string text to an int for a line 
-        //format J <line number>
-            istringstream(comm[1]) >> currentLine;
-            if (currentLine == -1) { //if command line # is -1;
-                file.setCurrentLine(currentLine);
+            case 'W':{ //write to a file
+                file.setFileName(comm[0]);
+                file.write();
+                break;
+            } 
+            case 'J':{ //jump to a line
+            //need to change string text to an int for a line 
+            //format J <line number>
+                if (comm.size()==1 || comm.size()>2){//if command is only J or more than J <line #>, throw exception.
+                    throw (t);
+                }
+                istringstream(comm[1]) >> currentLine;
+                if (currentLine == -1) { //if command line # is -1;
+                    file.setCurrentLine(currentLine);
+                }
+                else if (currentLine == 0) {//if command line # is 0;
+                    file.setCurrentLine(file.getLastElement()); //last element
+                }
+                else
+                    file.setCurrentLine(currentLine);
+                cout << "Current Line: " << currentLine << endl;
+                break;
             }
-            else if (currentLine == 0) {//if command line # is 0;
-                file.setCurrentLine(file.getLastElement()); //last element
+            case 'I':{ //insert text AT current line
+                input=concatenate(comm); //concatenates string elements after command together
+                file.insertAt(input);
+                cout << "case I: "<< input << endl;
+                break;
             }
-            else
-                file.setCurrentLine(currentLine);
-            cout << "Current Line: " << currentLine << endl;
-            break;
+            case 'A':{ //insert text AFTER current line
+                input=concatenate(comm);
+                file.insertAfter(input);
+                break;
+            }
+            case 'L':{ //list contents of the buffer
+                int l1=0, l2=0;
+                if (comm.size() == 2) {//outputs current line if 1 line is given
+                istringstream(comm[1]) >> l1;
+                }
+                else if (comm.size() == 3) {
+                istringstream(comm[1]) >> l1;
+                istringstream(comm[2]) >> l2;
+                    if (l1 > l2) { //if line 1 is bigger than line 2
+                        cout << "LINE #1 CANNOT BE GREATER THAN LINE #2" << endl;
+                        throw (t);
+                    }
+                }
+                else if (comm.size()>3){//if command is more than J <line #> <line#>, throw exception.
+                    cout << "TOO MANY COMMANDS!" << endl;
+                    throw (t);
+                }
+                        
+                file.listBuffer(comm);
+                break;
+            }
+            case 'D':{ //deletes one or more lines
+                int l1=0, l2=0;
+                if (comm.size() == 2) {//outputs current line if 1 line is given
+                    istringstream(comm[1]) >> l1;
+
+                }
+                else if (comm.size() == 3) {
+                    istringstream(comm[1]) >> l1;
+                    istringstream(comm[2]) >> l2;
+                    if (l1 > l2) {
+                        cout << "LINE #1 CANNOT BE GREATER THAN LINE #2" << endl;
+                        throw (t);
+                    }
+                }
+                else if (comm.size()>3){//if command is more than J <line #> <line#>, throw exception.
+                    cout << "TOO MANY COMMANDS!" << endl;
+                    throw (t);
+                }                                   
+                file.deleteLines(comm);
+                break;
+            }
+            case 'Q':{ //quits the editor
+                cout << "Terminating the program...";
+                exit(0); //terminate program 
+                
+                break;
+            }
+            } //END SWITCH
+        } //END TRY
+        catch(int j){
+            cout << "SYNTAX ERROR!!"<< endl;
         }
-        case 'I':{ //insert text AT current line
-            input=concatenate(comm); //concatenates string elements after command together
-            file.insertAt(input);
-            cout << "case I: "<< input << endl;
-            break;
-        }
-        case 'A':{ //insert text AFTER current line
-            input=concatenate(comm);
-            file.insertAfter(input);
-            break;
-        }
-        case 'L':{ //list contents of the buffer
-            file.listBuffer(comm);
-            break;
-        }
-        case 'D':{ //deletes one or more lines
-            file.deleteLines(comm);
-            break;
-        }
-        case 'Q':{ //quits the editor
-            break;
-        }
-        }
+
         comm.clear(); //clear vector
         
+        keepAlive=true;
         while(keepAlive){
             try{
                 int x = 0;
@@ -131,7 +179,7 @@ int main(){
                 std::getline(std::cin, text);
                 splitString(text, comm); //split string into words
                 getCommand(comm, command);
-                if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D')){
+                if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'||command[0]=='Q')) {
                     throw (x);
                 }
                 keepAlive=false;
@@ -140,9 +188,35 @@ int main(){
                 cout << "SYNTAX ERROR IN COMMAND ENTER AGAIN!!" << endl; 
             }
         }
-    }
+    } //END COMMAND LOOP
     return 0;
     //new feature branch
 }
 //hello
 //to comment highlighted text: shift \+ alt \+ a
+
+/*
+OUPUT:
+
+COMMAND: I hello world
+case I: hello world
+COMMAND: J 2
+Current Line: 2
+COMMAND: I delete this line
+case I: delete this line
+COMMAND: L
+1| hello world
+2| delete this line
+COMMAND: D
+COMMAND: L
+1| hello world
+COMMAND: J 1
+Current Line: 1
+COMMAND: A insert after
+COMMAND: L
+1| hello world
+2| insert after
+COMMAND: W hello.txt
+COMMAND: Q
+Terminating the program...
+*/
