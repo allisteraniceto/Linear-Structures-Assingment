@@ -57,21 +57,24 @@ int main(){
     
     bool keepAlive=true;
 
+    //exception handling, if not one of the commands, prompt user to reenter command
     while(keepAlive){
         try{
+            int x = 0;
             cout << "COMMAND: ";
             std::getline(std::cin, text);
             splitString(text, comm); //split string into words
             getCommand(comm, command);
-            if (command[0]!='W'||command[0]!='J'||command[0]!='I'||command[0]!='A'||command[0]!='L'||command[0]!='D'){
-                throw (comm[0]);
+            if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D')){
+                throw (x);
             }
             keepAlive=false;
         }
-        catch(string c){
+        catch(int x){
             cout << "SYNTAX ERROR IN COMMAND ENTER AGAIN!!" << endl; 
         }
     }
+
     //use switch for different commands
     while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
         switch(command[0]){ //switch requires integers
@@ -120,10 +123,23 @@ int main(){
         }
         }
         comm.clear(); //clear vector
-        cout << "COMMAND: "; //redo command process
-        std::getline(std::cin, text);
-        splitString(text, comm);
-        getCommand(comm, command);
+        
+        while(keepAlive){
+            try{
+                int x = 0;
+                cout << "COMMAND: ";
+                std::getline(std::cin, text);
+                splitString(text, comm); //split string into words
+                getCommand(comm, command);
+                if (!(command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D')){
+                    throw (x);
+                }
+                keepAlive=false;
+            }
+            catch(int x){
+                cout << "SYNTAX ERROR IN COMMAND ENTER AGAIN!!" << endl; 
+            }
+        }
     }
     return 0;
     //new feature branch
