@@ -58,9 +58,6 @@ int main(){
     cout << "COMMAND: ";
     std::getline(std::cin, text);
     splitString(text, comm); //split string into words
-    
-    
-
     getCommand(comm, command);
 
     //use switch for different commands
