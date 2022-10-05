@@ -55,11 +55,23 @@ int main(){
 
     menu(); //show command menu
     
-    cout << "COMMAND: ";
-    std::getline(std::cin, text);
-    splitString(text, comm); //split string into words
-    getCommand(comm, command);
+    bool keepAlive=true;
 
+    while(keepAlive){
+        try{
+            cout << "COMMAND: ";
+            std::getline(std::cin, text);
+            splitString(text, comm); //split string into words
+            getCommand(comm, command);
+            if (command[0]!='W'||command[0]!='J'||command[0]!='I'||command[0]!='A'||command[0]!='L'||command[0]!='D'){
+                throw (comm[0]);
+            }
+            keepAlive=false;
+        }
+        catch(string c){
+            cout << "SYNTAX ERROR IN COMMAND ENTER AGAIN!!" << endl; 
+        }
+    }
     //use switch for different commands
     while (command[0]=='W'||command[0]=='J'||command[0]=='I'||command[0]=='A'||command[0]=='L'||command[0]=='D'){ //does not include Q to exit program
         switch(command[0]){ //switch requires integers
