@@ -82,7 +82,7 @@ int main(){
             switch(command[0]){ //switch requires integers or char
 
             case 'W':{ //write to a file
-                file.setFileName(comm[0]);
+                file.setFileName(comm[1]);
                 file.write();
                 break;
             } 

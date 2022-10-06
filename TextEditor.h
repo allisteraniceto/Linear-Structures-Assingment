@@ -98,14 +98,15 @@ void TextEditor::makeVec(string file){
     readFile.close();
 }
 void TextEditor::write(){
-    writeFile.open(fileName); //open the file
-    if (!writeFile){ 
+    writeFile.open(fileName, std::ofstream::out); //open the file
+    if (!writeFile.is_open()){ 
         cout << "ERROR! WRONG FILE!!";
     }
     if (writeFile.is_open()){
-        if (vec.size()>1){ //if vector is not empty, write contents to .txt file
-            ostream_iterator<string> out_iterator(writeFile, "\n"); //iterator to go through vector
-            copy(vec.begin(), vec.end(), out_iterator);
+        if (vec.size()>0){ //if vector is not empty, write contents to .txt file
+            for (auto i = vec.begin(); i != vec.end(); i++) {
+                writeFile << *i << '\n';
+            }
         }
     }
     writeFile.close(); //remember to close the file after
